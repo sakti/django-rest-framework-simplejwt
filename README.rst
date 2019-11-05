@@ -68,8 +68,8 @@ for Simple JWT's ``TokenObtainPairView`` and ``TokenRefreshView`` views:
 
   urlpatterns = [
       ...
-      url(r'^api/token/$', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-      url(r'^api/token/refresh/$', TokenRefreshView.as_view(), name='token_refresh'),
+      path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+      path('api/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
       ...
   ]
 
@@ -81,7 +81,7 @@ signing key:
 
   urlpatterns = [
       ...
-      url(r'^api/token/verify/$', TokenVerifyView.as_view(), name='token_verify'),
+      path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
       ...
   ]
 
@@ -151,6 +151,8 @@ Some of Simple JWT's behavior can be customized through settings variables in
       'ALGORITHM': 'HS256',
       'SIGNING_KEY': settings.SECRET_KEY,
       'VERIFYING_KEY': None,
+      'AUDIENCE': None,
+      'ISSUER': None,
 
       'AUTH_HEADER_TYPES': ('Bearer',),
       'USER_ID_FIELD': 'id',
@@ -228,6 +230,16 @@ VERIFYING_KEY
   ``SIGNING_KEY`` setting will be used.  If an RSA algorithm has been specified
   by the ``ALGORITHM`` setting, the ``VERIFYING_KEY`` setting must be set to a
   string which contains an RSA public key.
+
+AUDIENCE
+  The audience claim to be included in generated tokens and/or validated in
+  decoded tokens. When set to ``None``, this field is excluded from tokens and
+  is not validated.
+
+ISSUER
+  The issuer claim to be included in generated tokens and/or validated in
+  decoded tokens. When set to ``None``, this field is excluded from tokens and
+  is not validated.
 
 AUTH_HEADER_TYPES
   The authorization header type(s) that will be accepted for views that require
@@ -396,8 +408,8 @@ access token specific ``TokenObtainPairView`` and ``TokenRefreshView`` views:
 
   urlpatterns = [
       ...
-      url(r'^api/token/$', TokenObtainSlidingView.as_view(), name='token_obtain'),
-      url(r'^api/token/refresh/$', TokenRefreshSlidingView.as_view(), name='token_refresh'),
+      path('api/token/', TokenObtainSlidingView.as_view(), name='token_obtain'),
+      path('api/token/refresh/', TokenRefreshSlidingView.as_view(), name='token_refresh'),
       ...
   ]
 
