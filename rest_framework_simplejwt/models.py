@@ -1,3 +1,6 @@
+import django
+django.setup()
+
 from django.contrib.auth import models as auth_models
 from django.db.models.manager import EmptyManager
 from django.utils.functional import cached_property
